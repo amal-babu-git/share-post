@@ -1,5 +1,4 @@
 import "./App.css";
-import Login from "./components/Login";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Home from "./components/Home";
 

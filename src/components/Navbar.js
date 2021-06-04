@@ -4,7 +4,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
 
 function Navbar() {
@@ -12,8 +11,8 @@ function Navbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar color="transparent" position="static">
-        <Toolbar>
+      <AppBar color="inherit" position="fixed">
+        <Toolbar >
           <Typography variant="h6" color="secondary" className={classes.title}>
             Post Share
           </Typography>
@@ -23,7 +22,7 @@ function Navbar() {
                       variant="circle"
                   />
           <Button color="secondary" variant="outlined">
-            Login
+            LogOut
           </Button>
         </Toolbar>
       </AppBar>
