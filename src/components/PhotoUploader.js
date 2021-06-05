@@ -23,7 +23,7 @@ const PhotoUploader = () => {
 
   const handleChange = (e) => {
 
-    
+
     if (e.target.files[0]) {
       setActivePostButon(false)
       //set the image that selected ,files[0] means the first file
@@ -114,6 +114,7 @@ const PhotoUploader = () => {
               multiline
               rows={4}
               variant="filled"
+              onChange={(e) => setcaption(e.target.value)}
             />
           </Grid>
           <Button variant="text" color="secondary" component="label">

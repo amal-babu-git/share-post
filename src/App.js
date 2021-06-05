@@ -10,10 +10,10 @@ import {
 } from "./features/userSlice";
 
 function App() {
-  const dispatch = useDispatch();
+ // const dispatch = useDispatch();
   const userName = useSelector(selectUserName);
-  const userEmail = useSelector(selectUserEmail);
-  const profileUrl = useSelector(selectProfileUrl);
+  //const userEmail = useSelector(selectUserEmail);
+  //const profileUrl = useSelector(selectProfileUrl);
 
   return (
     <div className="app">
