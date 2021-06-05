@@ -6,22 +6,28 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProfileUrl, selectUserName, setUserLogOut } from "../features/userSlice";
+import {
+  selectProfileUrl,
+  selectUserName,
+  setUserLogOut,
+} from "../features/userSlice";
 import { auth } from "../firebase/firebase";
 
 function Navbar() {
   const classes = useStyles();
 
-  const userName = useSelector(selectUserName)
-  const profileUrl = useSelector(selectProfileUrl)
-  const dispatch = useDispatch()
+  const userName = useSelector(selectUserName);
+  const profileUrl = useSelector(selectProfileUrl);
+  const dispatch = useDispatch();
 
   const signOutHandler = () => {
-    auth.signOut().then(() => {
-      dispatch(setUserLogOut())
-    })
-    .catch(err=>(alert(err.message)))
-  }
+    auth
+      .signOut()
+      .then(() => {
+        dispatch(setUserLogOut());
+      })
+      .catch((err) => alert(err.message));
+  };
 
   return (
     <div className={classes.root}>
@@ -51,11 +57,10 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    },
-    avatar: {
-        marginRight: "5px",
-        
-  }
+  },
+  avatar: {
+    marginRight: "5px",
+  },
 }));
 
 export default Navbar;

@@ -1,78 +1,53 @@
-import Navbar from "./Navbar"
-import Post from "./post"
-import { Grid } from "@material-ui/core"
+import Navbar from "./Navbar";
+import Post from "./post";
+import { Grid } from "@material-ui/core";
 import PhotoUploader from "./PhotoUploader";
+import { useEffect, useState } from "react";
+import { db } from "../firebase/firebase";
+//import { useDispatch, useSelector } from "react-redux";
+//import { selectId, selectPosts, setPost } from "../features/postsSlice";
 
 function Home() {
+  
+  const [postsArray, setPostsArray] = useState([]);
 
 
-    return (
-      <div>
-        <Navbar />
-        <PhotoUploader />
-        <Grid
-          container
-          direction="row"
-          justify="space-between"
-          style={{ marginTop: "60px" }}
-        >
+  useEffect(() => {
+    db.collection("posts")
+      .orderBy("timeStamp", "desc")
+      .onSnapshot((snap) => {
+        setPostsArray(
+          snap.docs.map((doc) => ({
+            id: doc.id,
+            post: doc.data(),
+          }))
+        );
+      });
+  }, []);
+
+  return (
+    <div>
+      <Navbar />
+      <PhotoUploader />
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        style={{ marginTop: "60px" }}
+      >
+        {postsArray.map(({ id, post }) => (
           <Post
-            userName="Lussy Vincent"
-            imageUrl="https://material-ui.com/static/images/avatar/3.jpg"
-            caption="Hellow new image"
-            avatarUrl="https://material-ui.com/static/images/avatar/3.jpg"
+            key={id}
+            userName={post.userName}
+            caption={post.caption}
+            imageUrl={post.imageUrl}
+            avatarUrl={post.profileUrl}
+          //  date={post.timeStamp().date().toString}
           />
-          <Post
-            userName="Lussy Vincent"
-            imageUrl="https://material-ui.com/static/images/avatar/3.jpg"
-            caption="Hellow new image"
-            avatarUrl="https://material-ui.com/static/images/avatar/3.jpg"
-          />
-          <Post
-            userName="Lussy Vincent"
-            imageUrl="https://material-ui.com/static/images/avatar/3.jpg"
-            caption="Hellow new image"
-            avatarUrl="https://material-ui.com/static/images/avatar/3.jpg"
-          />
-          <Post
-            userName="Lussy Vincent"
-            imageUrl="https://material-ui.com/static/images/avatar/3.jpg"
-            caption="Hellow new image"
-            avatarUrl="https://material-ui.com/static/images/avatar/3.jpg"
-          />
-          <Post
-            userName="Lussy Vincent"
-            imageUrl="https://material-ui.com/static/images/avatar/3.jpg"
-            caption="Hellow new image"
-            avatarUrl="https://material-ui.com/static/images/avatar/3.jpg"
-          />
-          <Post
-            userName="Lussy Vincent"
-            imageUrl="https://material-ui.com/static/images/avatar/3.jpg"
-            caption="Hellow new image"
-            avatarUrl="https://material-ui.com/static/images/avatar/3.jpg"
-          />
-          <Post
-            userName="Lussy Vincent"
-            imageUrl="https://material-ui.com/static/images/avatar/3.jpg"
-            caption="Hellow new image"
-            avatarUrl="https://material-ui.com/static/images/avatar/3.jpg"
-          />
-          <Post
-            userName="Lussy Vincent"
-            imageUrl="https://material-ui.com/static/images/avatar/3.jpg"
-            caption="Hellow new image"
-            avatarUrl="https://material-ui.com/static/images/avatar/3.jpg"
-          />
-          <Post
-            userName="Lussy Vincent"
-            imageUrl="https://material-ui.com/static/images/avatar/3.jpg"
-            caption="Hellow new image"
-            avatarUrl="https://material-ui.com/static/images/avatar/3.jpg"
-          />
-        </Grid>
-      </div>
-    );
+        ))}
+      </Grid>
+    </div>
+  );
 }
 
-export default Home
+export default Home;
