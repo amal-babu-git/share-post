@@ -1,7 +1,8 @@
-import { Button, Typography, Grid, Card , } from "@material-ui/core"
+import { Button, Typography, Grid, Card, } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core"
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setActiveUser } from "../features/userSlice";
+import { setActiveUser, setUserLogOut } from "../features/userSlice";
 import { auth, provider } from "../firebase/firebase";
 
 const Login = () => {
@@ -10,102 +11,131 @@ const Login = () => {
 
   const dispatch = useDispatch()
 
+
+  useEffect(() => {
+
+
+
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        //user logged in
+        //  console.log(authUser)
+        dispatch(setActiveUser({
+          userName: authUser.displayName,
+          userEmail: authUser.email,
+          profileUrl:authUser.photoURL
+        }))
+
+      } else {
+        //user logout
+
+        dispatch(setUserLogOut())
+      }
+    })
+
+    return () => {
+      unsubscribe();
+    }
+  }, [])
+
+
+
   const signInHandler = () => {
 
     auth.signInWithPopup(provider).then((result) => {
       dispatch(setActiveUser({
         userName: result.user.displayName,
         userEmail: result.user.userEmail,
-        profileUrl:result.user.photoURL
+        profileUrl: result.user.photoURL
       }))
-    }).catch=(err)=>alert(err.message)
-    
+    }).catch = (err) => alert(err.message)
+
   }
 
 
 
 
-    return (
-        
-      <Grid container direction="column" justify="center" alignItems="center">
-        <Grid item alignContent="center">
-          <Card className={classes.LoginCard}>
-            <Grid
-              container
-              direction="column"
-              justify="center"
-              alignItems="center"
-            >
-              <Grid item>
-                <Typography
-                  variant="h4"
-                  color="textPrimary"
-                  className={classes.AppTitle}
-                >
-                  Share Posts
-                </Typography>
-              </Grid>
-              <Grid item>
+  return (
+
+    <Grid container direction="column" justify="center" alignItems="center">
+      <Grid item alignContent="center">
+        <Card className={classes.LoginCard}>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item>
+              <Typography
+                variant="h4"
+                color="textPrimary"
+                className={classes.AppTitle}
+              >
+                Share Posts
+              </Typography>
+            </Grid>
+            <Grid item>
+              <img
+                className={classes.LoginImage}
+                src="/images/login-p.png"
+                alt=""
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                color="primary"
+                variant="outlined"
+                className={classes.googleButton}
+                onClick={signInHandler}
+              >
                 <img
-                  className={classes.LoginImage}
-                  src="/images/login-p.png"
+                  className={classes.googleSvg}
+                  src="/images/google.svg"
                   alt=""
                 />
-              </Grid>
-              <Grid item>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  className={classes.googleButton}
-                  onClick={signInHandler}
-                >
-                  <img
-                    className={classes.googleSvg}
-                    src="/images/google.svg"
-                    alt=""
-                  />
-                  <span>Sign in with google</span>
-                </Button>
-              </Grid>
+                <span>Sign in with google</span>
+              </Button>
             </Grid>
-          </Card>
-        </Grid>
+          </Grid>
+        </Card>
       </Grid>
-    );
+    </Grid>
+  );
 }
 
 const useStyle = makeStyles({
 
-    googleButton: {
-        borderRadius: "30px",
-        padding: "10px",
-        marginBottom:"5px",
-        
-    },
-    googleSvg: {
+  googleButton: {
+    borderRadius: "30px",
+    padding: "10px",
+    marginBottom: "5px",
 
-        padding: "1px",
-        marginRight: "5px",  
-    },
-    AppTitle: {
-        fontFamily: "Roboto",
-        fontWeight: "600",
-        padding: "10px",
-        
-        
-    },
-    LoginImage: {
+  },
+  googleSvg: {
 
-        padding: "5px",
-        
-    },
-    LoginCard: {
-        margin: "30px 10px 10px ",
-        padding: "5px",
-        maxWidth: "700px",
-        
-    }
-    
+    padding: "1px",
+    marginRight: "5px",
+  },
+  AppTitle: {
+    fontFamily: "Roboto",
+    fontWeight: "600",
+    padding: "10px",
+
+
+  },
+  LoginImage: {
+
+    padding: "5px",
+
+  },
+  LoginCard: {
+    margin: "30px 10px 10px ",
+    padding: "5px",
+    maxWidth: "700px",
+
+  }
+
 })
 
 export default Login
