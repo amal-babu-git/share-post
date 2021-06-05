@@ -41,7 +41,7 @@ const useStyle = makeStyles({
   post__card: {
     padding: "5px",
     textAlign: "center",
-    maxWidth: "345px",
+    maxWidth: "500px",
   },
   media: {
     height: 0,
