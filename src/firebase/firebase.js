@@ -1,3 +1,7 @@
+
+import firebase from "firebase";
+
+
 var firebaseConfig = {
     apiKey: "AIzaSyBlj5V9BZ6IyU_6sFeqUZtENpos-5UQaFM",
     authDomain: "share-post-app.firebaseapp.com",

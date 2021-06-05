@@ -1,9 +1,29 @@
 import { Button, Typography, Grid, Card , } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core"
+import { useDispatch } from "react-redux";
+import { setActiveUser } from "../features/userSlice";
+import { auth, provider } from "../firebase/firebase";
 
 const Login = () => {
 
-    const classes = useStyle();
+  const classes = useStyle();
+
+  const dispatch = useDispatch()
+
+  const signInHandler = () => {
+
+    auth.signInWithPopup(provider).then((result) => {
+      dispatch(setActiveUser({
+        userName: result.user.displayName,
+        userEmail: result.user.userEmail,
+        profileUrl:result.user.photoURL
+      }))
+    }).catch=(err)=>alert(err.message)
+    
+  }
+
+
+
 
     return (
         
@@ -37,6 +57,7 @@ const Login = () => {
                   color="primary"
                   variant="outlined"
                   className={classes.googleButton}
+                  onClick={signInHandler}
                 >
                   <img
                     className={classes.googleSvg}

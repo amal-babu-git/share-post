@@ -2,13 +2,8 @@ import Navbar from "./Navbar"
 import Post from "./post"
 import { Grid } from "@material-ui/core"
 import PhotoUploader from "./PhotoUploader";
-import { useDispatch , useSelector } from "react-redux";
-
 
 function Home() {
-
-  const dispatch = useDispatch();
-  
 
 
     return (
