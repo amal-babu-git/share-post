@@ -1,8 +1,7 @@
 import { Button, Typography, Grid, Card, } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core"
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setActiveUser, setUserLogOut } from "../features/userSlice";
+import { setActiveUser } from "../features/userSlice";
 import { auth, provider } from "../firebase/firebase";
 
 const Login = () => {
@@ -10,33 +9,6 @@ const Login = () => {
   const classes = useStyle();
 
   const dispatch = useDispatch()
-
-
-  useEffect(() => {
-
-
-
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        //user logged in
-        //  console.log(authUser)
-        dispatch(setActiveUser({
-          userName: authUser.displayName,
-          userEmail: authUser.email,
-          profileUrl:authUser.photoURL
-        }))
-
-      } else {
-        //user logout
-
-        dispatch(setUserLogOut())
-      }
-    })
-
-    return () => {
-      unsubscribe();
-    }
-  }, [])
 
 
 

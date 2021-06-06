@@ -26,9 +26,7 @@ const Post = ({ userName, imageUrl, caption, avatarUrl, date, id, email }) => {
   }, []);
 
   const deletePostHandler = () => {
-    if (userEmail === email) {
       db.collection("posts").doc(id).delete();
-    }
   };
 
   return (
@@ -37,11 +35,7 @@ const Post = ({ userName, imageUrl, caption, avatarUrl, date, id, email }) => {
         <CardHeader
           textalign="center"
           titleTypographyProps={{ variant: "subtitle2" }}
-          avatar={
-            <Avatar className={classes.avatar} src={avatarUrl}>
-              <h1></h1>
-            </Avatar>
-          }
+          avatar={<Avatar className={classes.avatar} src={avatarUrl}></Avatar>}
           className={classes.header}
           title={userName}
           subheader={date}
@@ -53,9 +47,7 @@ const Post = ({ userName, imageUrl, caption, avatarUrl, date, id, email }) => {
             {caption}
           </Typography>
         </CardContent>
-        {
-           (activeDeleteButton && (<DeleteSharp onClick={deletePostHandler}/>))
-        }
+        {activeDeleteButton && <DeleteSharp onClick={deletePostHandler} />}
       </Card>
     </Grid>
   );

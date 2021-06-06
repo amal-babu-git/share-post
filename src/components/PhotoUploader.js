@@ -13,7 +13,11 @@ import { useState } from "react";
 import { db, storage } from "../firebase/firebase";
 import firebase from "firebase";
 import { useSelector } from "react-redux";
-import { selectProfileUrl, selectUserEmail, selectUserName } from "../features/userSlice";
+import {
+  selectProfileUrl,
+  selectUserEmail,
+  selectUserName,
+} from "../features/userSlice";
 
 const PhotoUploader = () => {
   const classes = useStyle();
@@ -23,7 +27,7 @@ const PhotoUploader = () => {
   const [circularProgress, setCircularProgress] = useState(false);
   const [caption, setcaption] = useState("");
   const userName = useSelector(selectUserName);
-  const userEmail=useSelector(selectUserEmail)
+  const userEmail = useSelector(selectUserEmail);
   const profileUrl = useSelector(selectProfileUrl);
 
   const handleChange = (e) => {
@@ -76,7 +80,7 @@ const PhotoUploader = () => {
               //dateTime:Date.now(),
               caption: caption,
               imageUrl: url,
-              userEmail:userEmail,
+              userEmail: userEmail,
               profileUrl: profileUrl,
               userName: userName,
             });
@@ -120,23 +124,22 @@ const PhotoUploader = () => {
               max={100}
               color="secondary"
               size={100}
-              disableShrink={true}
+             // disableShrink={true}
               thickness={4.6}
               value={progress}
             />
           )}
 
           <Box
-           // component={Grid}
+            // component={Grid}
             // item
             className={classes.photoUploader__box}
-           // xl={12}
+            // xl={12}
             //lg={12}
-           // xs={3}
+            // xs={3}
             display={{ xs: "none", lg: "flex" }}
           >
             <Typography variant="h6">{"Welcome  " + userName}</Typography>
-            
           </Box>
 
           <div>
@@ -150,6 +153,7 @@ const PhotoUploader = () => {
               onChange={(e) => setcaption(e.target.value)}
             />
           </div>
+
 
           <div>
             <Button variant="text" color="secondary" component="label">
