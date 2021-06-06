@@ -4,13 +4,13 @@ import { Grid } from "@material-ui/core";
 import PhotoUploader from "./PhotoUploader";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
+import { useSelector } from "react-redux";
+import { selectUserEmail } from "../features/userSlice";
 //import { useDispatch, useSelector } from "react-redux";
 //import { selectId, selectPosts, setPost } from "../features/postsSlice";
 
 function Home() {
-  
   const [postsArray, setPostsArray] = useState([]);
-
 
   useEffect(() => {
     db.collection("posts")
@@ -38,11 +38,13 @@ function Home() {
         {postsArray.map(({ id, post }) => (
           <Post
             key={id}
+            id={id}
             userName={post.userName}
             caption={post.caption}
             imageUrl={post.imageUrl}
             avatarUrl={post.profileUrl}
-          //  date={post.timeStamp().date().toString}
+            email={post.userEmail}
+            //  date={post.timeStamp().date().toString}
           />
         ))}
       </Grid>
