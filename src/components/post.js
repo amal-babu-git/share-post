@@ -16,12 +16,17 @@ const Post = ({ userName, imageUrl, caption, avatarUrl, date }) => {
     <Grid item xl={3} lg={3} sm={4} xs={12} className={classes.post__cardGrid}>
       <Card className={classes.post__card}>
         <CardHeader
-          textAlign="center"
-          avatar={<Avatar className={classes.avatar} src={avatarUrl}></Avatar>}
+          textalign="start"
+          avatar={
+            <Avatar className={classes.avatar} src={avatarUrl}>
+              <h1></h1>
+            </Avatar>
+          }
           className={classes.header}
           title={userName}
           subheader={date}
         />
+
         <CardMedia className={classes.media} image={imageUrl} />
         <CardContent>
           <Typography variant="body1" color="textPrimary" component="p">
@@ -52,6 +57,10 @@ const useStyle = makeStyles({
   },
   header: {
     color: "Black",
+    marginRight: "5rem",
+    fontStyle: "",
+    fontWeight:"bolder"
+    
   },
 });
 

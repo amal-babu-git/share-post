@@ -5,6 +5,8 @@ import {
   Card,
   TextField,
   Button,
+  CircularProgress,
+  Typography
 } from "@material-ui/core";
 import { useState } from "react";
 import { db, storage } from "../firebase/firebase";
@@ -17,6 +19,7 @@ const PhotoUploader = () => {
   const [image, setImage] = useState(null);
   const [activePostButon, setActivePostButon] = useState(true)
   const [progress, setProgress] = useState(0);
+  const [circularProgress,setCircularProgress]=useState(false)
   const [caption, setcaption] = useState("");
   const userName = useSelector(selectUserName);
   const profileUrl = useSelector(selectProfileUrl)
@@ -34,6 +37,7 @@ const PhotoUploader = () => {
   };
   const handleUpload = () => {
     setActivePostButon(true)
+    setCircularProgress(true)
 
     const uploadTask = storage.ref(`images/${image.name}`).put(image);
 
@@ -53,6 +57,7 @@ const PhotoUploader = () => {
         );
 
         setProgress(progress);
+        // console.log("progress" , progress)
       },
       (error) => {
         //if any error while uploading
@@ -80,6 +85,7 @@ const PhotoUploader = () => {
               setProgress(0);
               setImage(null);
               setcaption("");
+              setCircularProgress(false)
             }
             //all done
           );
@@ -105,8 +111,19 @@ const PhotoUploader = () => {
       // display={{ xs: "none", lg: "block" }}
       >
         <Card className={classes.photoUploader__card}>
-          <Grid>
-            <progress max="" value={progress} />
+          <Typography variant="h6" >Upload a new photo</Typography>
+
+          {
+            ((circularProgress) && (<CircularProgress variant="determinate"
+              max={100} color="secondary"
+              size={100}
+              disableShrink={true}
+              thickness={4.6}
+              value={progress} />))
+         }
+          
+
+          <Grid item>
             <TextField
               id="standard-multiline-static"
               label="Enter Caption"
@@ -134,7 +151,7 @@ const useStyle = makeStyles({
   photoUploader: {
     marginTop: "80px",
     padding: "10px",
-    maxWidth: "300px",
+    maxWidth: "400px",
   },
   photoUploader__box: {
     //padding: "5px",
@@ -143,7 +160,7 @@ const useStyle = makeStyles({
     //  flexDirection:"Row"
   },
   photoUploader__card: {
-    padding: "5px",
+    padding: "10px",
   },
 });
 
