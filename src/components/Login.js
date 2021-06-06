@@ -14,7 +14,7 @@ const Login = () => {
 
   const signInHandler = () => {
 
-    auth.signInWithPopup(provider).then((result) => {
+    auth.signInWithRedirect(provider).then((result) => {
       dispatch(setActiveUser({
         userName: result.user.displayName,
         userEmail: result.user.userEmail,
